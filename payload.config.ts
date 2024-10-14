@@ -72,6 +72,15 @@ export default buildConfig({
         // TODO: Should the profile be its own collection?
       ],
     },
+    /**
+     * TODO: Add other collections:
+     * - Events
+     * - Event Occurrences
+     * - Organizations
+     * - Projects
+     * - Teams
+     * - Profiles??? (is this a separate collection in the current portal?)
+     */
   ],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
