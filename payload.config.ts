@@ -38,32 +38,38 @@ export default buildConfig({
         delete: () => false,
         update: () => false,
       },
-      fields: [],
-    },
-    {
-      slug: 'pages',
-      admin: {
-        useAsTitle: 'title',
-      },
       fields: [
         {
-          name: 'title',
+          name: 'name',
           type: 'text',
+          required: true,
         },
         {
-          name: 'content',
-          type: 'richText',
+          name: 'role',
+          type: 'select',
+          hasMany: false,
+          required: true,
+          options: [
+            {
+              label: 'Admin',
+              value: 'admin',
+            },
+            {
+              label: 'Organization',
+              value: 'organization',
+            },
+            {
+              label: 'Volunteer',
+              value: 'volunteer',
+            },
+          ],
         },
-      ],
-    },
-    {
-      slug: 'media',
-      upload: true,
-      fields: [
         {
-          name: 'text',
-          type: 'text',
+          name: 'notes',
+          type: 'textarea',
+          required: false,
         },
+        // TODO: Should the profile be its own collection?
       ],
     },
   ],
@@ -107,6 +113,8 @@ export default buildConfig({
         data: {
           email: 'admin@codeforgoodwm.org',
           password: 'admin',
+          name: 'CFG Admin',
+          role: 'admin',
         },
       })
     }
