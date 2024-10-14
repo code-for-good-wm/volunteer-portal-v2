@@ -1,5 +1,5 @@
 {
-  "name": "payload-3.0-demo",
+  "name": "volunteer-portal-v2",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -30,10 +30,10 @@
     "babel-plugin-react-compiler": "0.0.0-experimental-48eb8f4-20240822",
     "cross-env": "^7.0.3",
     "graphql": "^16.8.2",
-    "next": "15.0.0-canary.104",
+    "next": "15.0.0-canary.160",
     "payload": "3.0.0-beta.108",
-    "react": "19.0.0-rc-06d0b89e-20240801",
-    "react-dom": "19.0.0-rc-06d0b89e-20240801",
+    "react": "19.0.0-rc-5dcb0097-20240918",
+    "react-dom": "19.0.0-rc-5dcb0097-20240918",
     "sharp": "0.32.6"
   },
   "devDependencies": {
@@ -42,7 +42,7 @@
     "@types/react": "npm:types-react@19.0.0-rc.0",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.0",
     "eslint": "^8.57.0",
-    "eslint-config-next": "15.0.0-canary.104",
+    "eslint-config-next": "15.0.0-canary.160",
     "typescript": "5.5.4"
   },
   "pnpm": {
@@ -54,5 +54,6 @@
   "overrides": {
     "@types/react": "npm:types-react@19.0.0-rc.0",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.0"
-  }
+  },
+  "packageManager": "pnpm@9.12.1+sha512.e5a7e52a4183a02d5931057f7a0dbff9d5e9ce3161e33fa68ae392125b79282a8a8a470a51dfc8a0ed86221442eb2fb57019b0990ed24fab519bf0e1bc5ccfc4"
 }

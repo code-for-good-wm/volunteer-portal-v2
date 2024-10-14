@@ -90,8 +90,8 @@ export default buildConfig({
 
   admin: {
     autoLogin: {
-      email: 'dev@payloadcms.com',
-      password: 'test',
+      email: 'admin@codeforgoodwm.org',
+      password: 'admin',
       prefillOnly: true,
     },
   },
@@ -105,8 +105,8 @@ export default buildConfig({
       await payload.create({
         collection: 'users',
         data: {
-          email: 'dev@payloadcms.com',
-          password: 'test',
+          email: 'admin@codeforgoodwm.org',
+          password: 'admin',
         },
       })
     }
