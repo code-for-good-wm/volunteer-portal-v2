@@ -1,28 +1,35 @@
+import { admin } from '@/access/admin'
 import type { CollectionConfig } from 'payload'
 
 const Events: CollectionConfig = {
   slug: 'events',
   access: {
     read: () => true,
-    create: () => true,
-    update: () => true,
+    create: admin,
+    update: admin,
     delete: () => false,
   },
   fields: [
     {
-      name: 'title',
+      name: 'event-series',
+      type: 'relationship',
+      relationTo: 'event-series',
+      required: true,
+    },
+    {
+      name: 'name',
       type: 'text',
       required: true,
     },
     {
-      name: 'date',
+      name: 'start-date',
       type: 'date',
-      required: false,
+      required: true,
     },
     {
-      name: 'location',
-      type: 'text',
-      required: false,
+      name: 'end-date',
+      type: 'date',
+      required: true,
     },
     {
       name: 'description',

@@ -2,7 +2,9 @@ import path from 'path'
 // import { postgresAdapter } from '@payloadcms/db-postgres'
 import { en } from 'payload/i18n/en'
 import Users from './src/collections/Users'
+import EventSeries from './src/collections/EventSeries'
 import Events from './src/collections/Events'
+import Locations from './src/collections/Locations'
 import Projects from './src/collections/Projects'
 import Organizations from './src/collections/Organizations'
 import Teams from './src/collections/Teams'
@@ -38,8 +40,9 @@ export default buildConfig({
   editor: lexicalEditor(),
   collections: [
     Users,
+    EventSeries,
     Events,
-    // EventOccurrences,
+    Locations,
     Organizations,
     Projects,
     Teams,
