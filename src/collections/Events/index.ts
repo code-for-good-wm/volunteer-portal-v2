@@ -1,10 +1,9 @@
-import { admin } from '@/access/admin'
+import { admin } from '../../utilities/access'
 import type { CollectionConfig } from 'payload'
 
 const Events: CollectionConfig = {
   slug: 'events',
   access: {
-    read: () => true,
     create: admin,
     update: admin,
     delete: () => false,
@@ -35,6 +34,14 @@ const Events: CollectionConfig = {
       name: 'description',
       type: 'textarea',
       required: false,
+    },
+    {
+      name: 'admin-notes',
+      type: 'textarea',
+      required: false,
+      access: {
+        read: admin,
+      },
     },
   ],
 }

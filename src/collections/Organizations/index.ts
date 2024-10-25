@@ -1,11 +1,12 @@
+import { addressGroup } from '@/data/collectionGroups'
+import { admin, adminOrOrganization } from '../../utilities/access'
 import type { CollectionConfig } from 'payload'
 
 const Organizations: CollectionConfig = {
   slug: 'organizations',
   access: {
-    read: () => true,
-    create: () => true,
-    update: () => true,
+    create: admin,
+    update: adminOrOrganization,
     delete: () => false,
   },
   fields: [
@@ -18,6 +19,11 @@ const Organizations: CollectionConfig = {
       name: 'description',
       type: 'textarea',
       required: false,
+    },
+    {
+      name: 'address',
+      type: 'group',
+      fields: addressGroup,
     },
   ],
 }

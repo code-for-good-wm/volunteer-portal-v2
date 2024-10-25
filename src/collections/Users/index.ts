@@ -49,6 +49,8 @@ const Users: CollectionConfig = {
         },
       ],
     },
+    // TODO: what about email and phone number?  Phone might be better saved in the profile.
+    // But email is used for authentication, yes?  How do we add it to this collection from the authentication system?
     {
       name: 'notes',
       type: 'textarea',

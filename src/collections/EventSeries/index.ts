@@ -1,10 +1,9 @@
-import { admin } from '@/access/admin'
+import { admin } from '../../utilities/access'
 import type { CollectionConfig } from 'payload'
 
 const EventSeries: CollectionConfig = {
   slug: 'event-series',
   access: {
-    read: () => true,
     create: admin,
     update: admin,
     delete: () => false,

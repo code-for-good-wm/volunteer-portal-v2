@@ -1,4 +1,5 @@
-import { admin } from '@/access/admin'
+import { addressGroup } from '@/data/collectionGroups'
+import { admin } from '../../utilities/access'
 import stateOptions from '@/data/stateOptions'
 import type { CollectionConfig } from 'payload'
 
@@ -22,30 +23,9 @@ const Locations: CollectionConfig = {
       required: false,
     },
     {
-      name: 'address-line1',
-      type: 'text',
-      required: true,
-    },
-    {
-      name: 'address-line2',
-      type: 'text',
-      required: false,
-    },
-    {
-      name: 'city',
-      type: 'text',
-      required: true,
-    },
-    {
-      name: 'state',
-      type: 'select',
-      options: stateOptions,
-      required: true,
-    },
-    {
-      name: 'postal-code',
-      type: 'text',
-      required: true,
+      name: 'address',
+      type: 'group',
+      fields: addressGroup,
     },
     {
       name: 'admin-notes',
