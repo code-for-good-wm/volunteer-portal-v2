@@ -1,0 +1,18 @@
+import type { Access } from 'payload'
+
+export const isAdminOrSelf: Access = ({ req: { user } }) => {
+  // Need to be logged in
+  if (user) {
+    if (user.role?.includes('admin')) {
+      return true
+    }
+    // If any other type of user, only provide access to themselves
+    // return {
+    //   id: {
+    //     equals: user.id,
+    //   },
+    // } as any
+  }
+  // Reject everyone else
+  return false
+}

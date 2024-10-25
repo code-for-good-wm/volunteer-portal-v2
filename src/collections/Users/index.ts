@@ -1,11 +1,17 @@
 import type { CollectionConfig } from 'payload'
 
+import { authenticated } from '../../access/authenticated'
+import { isAdminOrSelf } from '../../access/adminOrSelf'
+
 const Users: CollectionConfig = {
   slug: 'users',
   auth: true,
   access: {
-    delete: () => false,
-    update: () => false,
+    admin: isAdminOrSelf,
+    create: authenticated,
+    delete: authenticated,
+    read: authenticated,
+    update: authenticated,
   },
   fields: [
     {
