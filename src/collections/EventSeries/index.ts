@@ -24,6 +24,15 @@ const EventSeries: CollectionConfig = {
       type: 'relationship',
       relationTo: 'events',
       hasMany: true,
+      required: false,
+    },
+    {
+      name: 'notes',
+      type: 'textarea',
+      required: false,
+      access: {
+        read: admin,
+      },
     },
   ],
 }

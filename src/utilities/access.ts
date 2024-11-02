@@ -6,6 +6,10 @@ export const admin = ({ req: { user } }: AccessArgs) => {
   return user?.role.includes('admin') ?? false
 }
 
-export const adminOrOrganization = ({ req: { user } }: AccessArgs) => {
-  return (user?.role.includes('admin') || user?.role.includes('organization')) ?? false
+export const adminOrOrgMember = ({ id, req: { user } }: AccessArgs) => {
+  return (
+    (user?.role.includes('admin') ||
+      (user?.role.includes('organization') && user?.organization === id)) ??
+    false
+  )
 }

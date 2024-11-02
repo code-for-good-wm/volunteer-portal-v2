@@ -4,7 +4,7 @@ import { en } from 'payload/i18n/en'
 import Users from './src/collections/Users'
 import EventSeries from './src/collections/EventSeries'
 import Events from './src/collections/Events'
-import Locations from './src/collections/Locations'
+import EventLocations from './src/collections/EventLocations'
 import Projects from './src/collections/Projects'
 import Organizations from './src/collections/Organizations'
 import Teams from './src/collections/Teams'
@@ -42,7 +42,7 @@ export default buildConfig({
     Users,
     EventSeries,
     Events,
-    Locations,
+    EventLocations,
     Organizations,
     Projects,
     Teams,

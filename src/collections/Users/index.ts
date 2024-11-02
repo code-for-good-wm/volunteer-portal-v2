@@ -1,3 +1,4 @@
+import { admin } from '@/utilities/access'
 import type { Access, CollectionConfig, User } from 'payload'
 
 export const isAdminOrSelf: Access<User> = ({ id, req: { user } }) => {
@@ -48,13 +49,27 @@ const Users: CollectionConfig = {
           value: 'volunteer',
         },
       ],
+      access: {
+        update: admin,
+      },
     },
     // TODO: what about email and phone number?  Phone might be better saved in the profile.
     // But email is used for authentication, yes?  How do we add it to this collection from the authentication system?
     {
+      name: 'organization',
+      type: 'relationship',
+      relationTo: 'organizations',
+      // TODO: This should likely be required if the user is an organization
+      required: false,
+    },
+    {
       name: 'notes',
       type: 'textarea',
       required: false,
+      access: {
+        read: admin,
+        update: admin,
+      },
     },
   ],
 }

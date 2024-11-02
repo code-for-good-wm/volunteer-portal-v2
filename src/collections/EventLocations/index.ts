@@ -3,8 +3,8 @@ import { admin } from '../../utilities/access'
 import stateOptions from '@/data/stateOptions'
 import type { CollectionConfig } from 'payload'
 
-const Locations: CollectionConfig = {
-  slug: 'locations',
+const EventLocations: CollectionConfig = {
+  slug: 'event-locations',
   access: {
     read: () => true,
     create: admin,
@@ -28,7 +28,7 @@ const Locations: CollectionConfig = {
       fields: addressGroup,
     },
     {
-      name: 'admin-notes',
+      name: 'notes',
       type: 'textarea',
       required: false,
       access: {
@@ -38,4 +38,4 @@ const Locations: CollectionConfig = {
   ],
 }
 
-export default Locations
+export default EventLocations

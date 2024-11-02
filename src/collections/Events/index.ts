@@ -36,7 +36,15 @@ const Events: CollectionConfig = {
       required: false,
     },
     {
-      name: 'admin-notes',
+      name: 'location',
+      type: 'relationship',
+      relationTo: 'event-locations',
+      // Virtual events would not have a location, so not required?
+      // TODO: If this event is virtual, should we capture virtual-specific info?
+      required: false,
+    },
+    {
+      name: 'notes',
       type: 'textarea',
       required: false,
       access: {

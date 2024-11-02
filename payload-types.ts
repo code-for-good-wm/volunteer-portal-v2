@@ -14,7 +14,7 @@ export interface Config {
     users: User;
     'event-series': EventSery;
     events: Event;
-    locations: Location;
+    'event-locations': EventLocation;
     organizations: Organization;
     projects: Project;
     teams: Team;
@@ -57,6 +57,7 @@ export interface User {
   id: string;
   name: string;
   role: 'admin' | 'organization' | 'volunteer';
+  organization?: (string | null) | Organization;
   notes?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -68,6 +69,74 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "organizations".
+ */
+export interface Organization {
+  id: string;
+  name: string;
+  description?: string | null;
+  address: {
+    'address-line1': string;
+    'address-line2'?: string | null;
+    city: string;
+    state:
+      | 'AL'
+      | 'AK'
+      | 'AZ'
+      | 'AR'
+      | 'CA'
+      | 'CO'
+      | 'CT'
+      | 'DE'
+      | 'FL'
+      | 'GA'
+      | 'HI'
+      | 'ID'
+      | 'IL'
+      | 'IN'
+      | 'IA'
+      | 'KS'
+      | 'KY'
+      | 'LA'
+      | 'ME'
+      | 'MD'
+      | 'MA'
+      | 'MI'
+      | 'MN'
+      | 'MS'
+      | 'MO'
+      | 'MT'
+      | 'NE'
+      | 'NV'
+      | 'NH'
+      | 'NJ'
+      | 'NM'
+      | 'NY'
+      | 'NC'
+      | 'ND'
+      | 'OH'
+      | 'OK'
+      | 'OR'
+      | 'PA'
+      | 'RI'
+      | 'SC'
+      | 'SD'
+      | 'TN'
+      | 'TX'
+      | 'UT'
+      | 'VT'
+      | 'VA'
+      | 'WA'
+      | 'WV'
+      | 'WI'
+      | 'WY';
+    'postal-code': string;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -98,79 +167,70 @@ export interface Event {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "locations".
+ * via the `definition` "event-locations".
  */
-export interface Location {
+export interface EventLocation {
   id: string;
   name: string;
   description?: string | null;
-  'address-line1': string;
-  'address-line2'?: string | null;
-  city: string;
-  state:
-    | 'AL'
-    | 'AK'
-    | 'AZ'
-    | 'AR'
-    | 'CA'
-    | 'CO'
-    | 'CT'
-    | 'DE'
-    | 'FL'
-    | 'GA'
-    | 'HI'
-    | 'ID'
-    | 'IL'
-    | 'IN'
-    | 'IA'
-    | 'KS'
-    | 'KY'
-    | 'LA'
-    | 'ME'
-    | 'MD'
-    | 'MA'
-    | 'MI'
-    | 'MN'
-    | 'MS'
-    | 'MO'
-    | 'MT'
-    | 'NE'
-    | 'NV'
-    | 'NH'
-    | 'NJ'
-    | 'NM'
-    | 'NY'
-    | 'NC'
-    | 'ND'
-    | 'OH'
-    | 'OK'
-    | 'OR'
-    | 'PA'
-    | 'RI'
-    | 'SC'
-    | 'SD'
-    | 'TN'
-    | 'TX'
-    | 'UT'
-    | 'VT'
-    | 'VA'
-    | 'WA'
-    | 'WV'
-    | 'WI'
-    | 'WY';
-  'postal-code': string;
-  'admin-notes'?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "organizations".
- */
-export interface Organization {
-  id: string;
-  name: string;
-  description?: string | null;
+  address: {
+    'address-line1': string;
+    'address-line2'?: string | null;
+    city: string;
+    state:
+      | 'AL'
+      | 'AK'
+      | 'AZ'
+      | 'AR'
+      | 'CA'
+      | 'CO'
+      | 'CT'
+      | 'DE'
+      | 'FL'
+      | 'GA'
+      | 'HI'
+      | 'ID'
+      | 'IL'
+      | 'IN'
+      | 'IA'
+      | 'KS'
+      | 'KY'
+      | 'LA'
+      | 'ME'
+      | 'MD'
+      | 'MA'
+      | 'MI'
+      | 'MN'
+      | 'MS'
+      | 'MO'
+      | 'MT'
+      | 'NE'
+      | 'NV'
+      | 'NH'
+      | 'NJ'
+      | 'NM'
+      | 'NY'
+      | 'NC'
+      | 'ND'
+      | 'OH'
+      | 'OK'
+      | 'OR'
+      | 'PA'
+      | 'RI'
+      | 'SC'
+      | 'SD'
+      | 'TN'
+      | 'TX'
+      | 'UT'
+      | 'VT'
+      | 'VA'
+      | 'WA'
+      | 'WV'
+      | 'WI'
+      | 'WY';
+    'postal-code': string;
+  };
+  notes?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -215,8 +275,8 @@ export interface PayloadLockedDocument {
         value: string | Event;
       } | null)
     | ({
-        relationTo: 'locations';
-        value: string | Location;
+        relationTo: 'event-locations';
+        value: string | EventLocation;
       } | null)
     | ({
         relationTo: 'organizations';
