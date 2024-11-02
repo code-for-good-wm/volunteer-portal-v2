@@ -17,12 +17,14 @@ const Projects: CollectionConfig = {
   fields: [
     {
       name: 'organizations',
+      label: 'Organization',
       type: 'relationship',
       relationTo: 'organizations',
       required: true,
     },
     {
       name: 'events',
+      label: 'Event',
       type: 'relationship',
       relationTo: 'events',
       required: false,

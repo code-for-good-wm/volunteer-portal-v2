@@ -6,7 +6,6 @@ import EventSeries from './src/collections/EventSeries'
 import Events from './src/collections/Events'
 import EventLocations from './src/collections/EventLocations'
 import Projects from './src/collections/Projects'
-import TeamRoles from './src/collections/TeamRoles'
 import Organizations from './src/collections/Organizations'
 import Teams from './src/collections/Teams'
 
@@ -47,7 +46,6 @@ export default buildConfig({
     Organizations,
     Projects,
     Teams,
-    TeamRoles,
     //Profiles
   ],
   secret: process.env.PAYLOAD_SECRET || '',

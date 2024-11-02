@@ -1,6 +1,5 @@
 import { addressGroup } from '@/data/collectionGroups'
 import { admin } from '../../utilities/access'
-import stateOptions from '@/data/stateOptions'
 import type { CollectionConfig } from 'payload'
 
 const EventLocations: CollectionConfig = {

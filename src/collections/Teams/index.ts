@@ -11,15 +11,22 @@ const Teams: CollectionConfig = {
   fields: [
     {
       name: 'projects',
+      label: 'Project',
       type: 'relationship',
       relationTo: 'projects',
       required: true,
     },
     {
       name: 'roles',
-      type: 'relationship',
-      relationTo: 'team-roles',
-      hasMany: true,
+      type: 'array',
+      fields: [
+        {
+          name: 'description',
+          label: 'Role Description',
+          type: 'text',
+          required: true,
+        },
+      ],
       required: true,
       access: {
         read: admin,
@@ -27,13 +34,16 @@ const Teams: CollectionConfig = {
     },
     {
       name: 'team-lead',
+      label: 'Team Lead(s)',
       type: 'relationship',
       relationTo: 'users',
+      hasMany: true,
       required: true,
       //TODO: Validate: the team leads must be members of the team
       //TODO: filterOptions? tbd
     },
     {
+      // NOTE: The intention here is to have a complete list of team members including team leads
       name: 'team-members',
       type: 'array',
       fields: [
@@ -41,23 +51,20 @@ const Teams: CollectionConfig = {
           name: 'volunteer',
           type: 'relationship',
           relationTo: 'users',
-          unique: true,
           filterOptions: () => {
             return {
+              // TODO: Also filter out any previously selected volunteers
+              // You shouldn't be able to add the same volunteer twice)
               role: { equals: 'volunteer' },
             }
           },
-          // NOTE: The intention here is to have a complete list of team members including team leads
-          //TODO: fix unique - cannot have the same user twice
         },
         {
           name: 'role',
-          type: 'relationship',
-          relationTo: 'team-roles',
-          hasMany: true,
+          type: 'text',
           required: true,
-          // TODO: In a perfect world, we would like to filter the roles
-          // based on the roles selected for this team, perhaps using filterOptions
+          // TODO: In a perfect world, we could pick from the roles added
+          // to the roles array above
           access: {
             read: admin,
           },

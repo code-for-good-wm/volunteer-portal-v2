@@ -18,7 +18,6 @@ export interface Config {
     organizations: Organization;
     projects: Project;
     teams: Team;
-    'team-roles': TeamRole;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -279,26 +278,19 @@ export interface Project {
 export interface Team {
   id: string;
   projects: string | Project;
-  roles: (string | TeamRole)[];
-  'team-lead': string | User;
+  roles: {
+    description: string;
+    id?: string | null;
+  }[];
+  'team-lead': (string | User)[];
   'team-members'?:
     | {
         volunteer?: (string | null) | User;
-        role: (string | TeamRole)[];
+        role: string;
         id?: string | null;
       }[]
     | null;
   notes?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "team-roles".
- */
-export interface TeamRole {
-  id: string;
-  name: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -336,10 +328,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'teams';
         value: string | Team;
-      } | null)
-    | ({
-        relationTo: 'team-roles';
-        value: string | TeamRole;
       } | null);
   globalSlug?: string | null;
   user: {
