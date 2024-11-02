@@ -31,3 +31,27 @@ export const addressGroup: Field[] = [
     required: true,
   },
 ]
+
+export const contactGroup: Field[] = [
+  {
+    name: 'name',
+    type: 'text',
+    required: true,
+  },
+  //TODO: make sure there's only one primary contact ??
+  {
+    name: 'primary-contact',
+    type: 'checkbox',
+    required: false,
+  },
+  {
+    name: 'phone-number',
+    type: 'text',
+    required: false,
+  },
+  {
+    name: 'email',
+    type: 'email',
+    required: false,
+  },
+]

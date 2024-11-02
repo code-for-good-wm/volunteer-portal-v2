@@ -9,6 +9,11 @@ const Projects: CollectionConfig = {
     update: admin,
     delete: () => false,
   },
+  admin: {
+    // TODO: It would be useful to include the organization as well as the
+    // brief description in the title
+    useAsTitle: 'brief-description',
+  },
   fields: [
     {
       name: 'organizations',
@@ -23,14 +28,20 @@ const Projects: CollectionConfig = {
       required: false,
     },
     {
-      name: 'name',
+      name: 'brief-description',
+      label: 'Brief Description (for public display)',
       type: 'text',
       required: true,
     },
     {
-      name: 'description',
+      name: 'extended-description',
+      // TODO: Should the extended description be visible to the organization?
+      label: 'Extended Description (for admin use)',
       type: 'textarea',
-      required: true,
+      required: false,
+      access: {
+        read: admin,
+      },
     },
     {
       name: 'project-size',

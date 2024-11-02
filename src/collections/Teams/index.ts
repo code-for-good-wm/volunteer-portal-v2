@@ -1,6 +1,5 @@
 import type { CollectionConfig } from 'payload'
 import { admin } from '@/utilities/access'
-import { Team, TeamRole } from 'payload-types'
 
 const Teams: CollectionConfig = {
   slug: 'teams',
@@ -42,12 +41,14 @@ const Teams: CollectionConfig = {
           name: 'volunteer',
           type: 'relationship',
           relationTo: 'users',
-          required: true,
           unique: true,
+          filterOptions: () => {
+            return {
+              role: { equals: 'volunteer' },
+            }
+          },
           // NOTE: The intention here is to have a complete list of team members including team leads
           //TODO: fix unique - cannot have the same user twice
-          //TODO: fix validate - role of the user must be volunteer
-          //TODO: validate: (val, {data}) => data.role === 'volunteer' && data.teamMembers,
         },
         {
           name: 'role',

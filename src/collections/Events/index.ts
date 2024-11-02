@@ -8,6 +8,9 @@ const Events: CollectionConfig = {
     update: admin,
     delete: () => false,
   },
+  admin: {
+    useAsTitle: 'name',
+  },
   fields: [
     {
       name: 'event-series',
@@ -45,14 +48,6 @@ const Events: CollectionConfig = {
       name: 'is-virtual',
       type: 'checkbox',
       required: false,
-    },
-    {
-      name: 'zoom-link',
-      type: 'text',
-      required: false,
-      admin: {
-        condition: ({ data }) => data.isVirtual,
-      },
     },
     {
       name: 'notes',

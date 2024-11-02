@@ -8,6 +8,9 @@ const EventSeries: CollectionConfig = {
     update: admin,
     delete: () => false,
   },
+  admin: {
+    useAsTitle: 'name',
+  },
   fields: [
     {
       name: 'name',

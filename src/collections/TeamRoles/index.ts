@@ -14,6 +14,9 @@ const TeamRoles: CollectionConfig = {
     update: () => false,
     delete: () => false,
   },
+  admin: {
+    useAsTitle: 'name',
+  },
   fields: [
     {
       name: 'name',

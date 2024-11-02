@@ -136,6 +136,16 @@ export interface Organization {
       | 'WY';
     'postal-code': string;
   };
+  website: string;
+  contacts?:
+    | {
+        name: string;
+        'primary-contact'?: boolean | null;
+        'phone-number'?: string | null;
+        email?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   notes?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -166,7 +176,6 @@ export interface Event {
   description?: string | null;
   location?: (string | null) | EventLocation;
   'is-virtual'?: boolean | null;
-  'zoom-link'?: string | null;
   notes?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -248,8 +257,8 @@ export interface Project {
   id: string;
   organizations: string | Organization;
   events?: (string | null) | Event;
-  name: string;
-  description: string;
+  'brief-description': string;
+  'extended-description'?: string | null;
   'project-size'?: ('xs' | 's' | 'm' | 'l' | 'xl') | null;
   'team-size'?: ('xs' | 's' | 'm' | 'l' | 'xl') | null;
   'key-skills'?: string | null;
@@ -274,7 +283,7 @@ export interface Team {
   'team-lead': string | User;
   'team-members'?:
     | {
-        volunteer: string | User;
+        volunteer?: (string | null) | User;
         role: (string | TeamRole)[];
         id?: string | null;
       }[]

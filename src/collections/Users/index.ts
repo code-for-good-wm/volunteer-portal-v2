@@ -21,6 +21,9 @@ const Users: CollectionConfig = {
     read: isAdminOrSelf,
     update: isAdminOrSelf,
   },
+  admin: {
+    useAsTitle: 'name',
+  },
   fields: [
     {
       name: 'name',
