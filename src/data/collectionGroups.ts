@@ -1,5 +1,6 @@
 import { Field } from 'payload'
 import stateOptions from './stateOptions'
+import { admin } from '@/utilities/access'
 
 // TODO: It may be unwise to make these fields required.
 // TODO: WHY?
@@ -53,5 +54,15 @@ export const contactGroup: Field[] = [
     name: 'email',
     type: 'email',
     required: false,
+  },
+  {
+    name: 'notes',
+    label: 'Notes (admin only)',
+    type: 'textarea',
+    required: false,
+    access: {
+      read: admin,
+      update: admin,
+    },
   },
 ]

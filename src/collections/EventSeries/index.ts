@@ -31,6 +31,7 @@ const EventSeries: CollectionConfig = {
     },
     {
       name: 'notes',
+      label: 'Notes (admin only)',
       type: 'textarea',
       required: false,
       access: {

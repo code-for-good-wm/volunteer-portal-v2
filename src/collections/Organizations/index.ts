@@ -37,9 +37,13 @@ const Organizations: CollectionConfig = {
       name: 'contacts',
       type: 'array',
       fields: contactGroup,
+      access: {
+        read: adminOrOrgMember,
+      },
     },
     {
       name: 'notes',
+      label: 'Notes (admin only)',
       type: 'textarea',
       required: false,
       access: {

@@ -26,6 +26,12 @@ const Teams: CollectionConfig = {
           type: 'text',
           required: true,
         },
+        {
+          name: 'notes',
+          label: 'Notes',
+          type: 'text',
+          required: false,
+        },
       ],
       required: true,
       access: {
@@ -73,6 +79,7 @@ const Teams: CollectionConfig = {
     },
     {
       name: 'notes',
+      label: 'Notes (admin only)',
       type: 'textarea',
       required: false,
       access: {

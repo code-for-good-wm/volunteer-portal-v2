@@ -142,6 +142,7 @@ export interface Organization {
         'primary-contact'?: boolean | null;
         'phone-number'?: string | null;
         email?: string | null;
+        notes?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -280,6 +281,7 @@ export interface Team {
   projects: string | Project;
   roles: {
     description: string;
+    notes?: string | null;
     id?: string | null;
   }[];
   'team-lead': (string | User)[];
