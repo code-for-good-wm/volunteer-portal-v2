@@ -2,16 +2,14 @@ import { admin } from '@/utilities/access'
 import type { Access, CollectionConfig, User } from 'payload'
 
 export const isAdminOrSelf: Access<User> = ({ id, req: { user } }) => {
-  // Need to be logged in
   if (user) {
     if (user.role?.includes('admin')) {
       return true
     }
-    // If any other type of user, only provide access to themselves
     // TODO: is the document ID of the users collection the same as the user ID?
     return id === user.id
   }
-  // Reject everyone else
+
   return false
 }
 
@@ -28,7 +26,7 @@ const Users: CollectionConfig = {
       name: 'name',
       type: 'text',
       required: true,
-      // TODO: min / max length?
+      maxLength: 35,
     },
     {
       name: 'role',
@@ -59,8 +57,14 @@ const Users: CollectionConfig = {
       name: 'organization',
       type: 'relationship',
       relationTo: 'organizations',
-      // TODO: This should likely be required if the user is an organization
       required: false,
+      // admin: {
+      //   condition: ({ data }) => data.role === 'organization',
+      // },
+      // validate:
+      //   ({ data }) =>
+      //   ({ data }) =>
+      //     data.role === 'organization',
     },
     {
       name: 'notes',

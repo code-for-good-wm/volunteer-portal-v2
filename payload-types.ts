@@ -135,6 +135,7 @@ export interface Organization {
       | 'WY';
     'postal-code': string;
   };
+  notes?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -147,6 +148,7 @@ export interface EventSery {
   name: string;
   description?: string | null;
   events?: (string | Event)[] | null;
+  notes?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -161,7 +163,10 @@ export interface Event {
   'start-date': string;
   'end-date': string;
   description?: string | null;
-  'admin-notes'?: string | null;
+  location?: (string | null) | EventLocation;
+  'is-virtual'?: boolean | null;
+  'zoom-link'?: string | null;
+  notes?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -240,8 +245,14 @@ export interface EventLocation {
  */
 export interface Project {
   id: string;
-  title: string;
+  organizations: string | Organization;
+  events?: (string | Event)[] | null;
+  name: string;
   description?: string | null;
+  'project-size': 'xs' | 's' | 'm' | 'l' | 'xl';
+  'team-size': 'xs' | 's' | 'm' | 'l' | 'xl';
+  'needed-skills': string;
+  notes?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -251,7 +262,24 @@ export interface Project {
  */
 export interface Team {
   id: string;
-  name: string;
+  projects: string | Project;
+  roles: {
+    name?: string | null;
+    id?: string | null;
+  }[];
+  'team-lead': string | User;
+  'team-members'?:
+    | {
+        volunteer: string | User;
+        'role-name'?:
+          | {
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  notes?: string | null;
   updatedAt: string;
   createdAt: string;
 }

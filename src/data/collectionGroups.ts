@@ -2,6 +2,7 @@ import { Field } from 'payload'
 import stateOptions from './stateOptions'
 
 // TODO: It may be unwise to make these fields required.
+// TODO: WHY?
 export const addressGroup: Field[] = [
   {
     name: 'address-line1',

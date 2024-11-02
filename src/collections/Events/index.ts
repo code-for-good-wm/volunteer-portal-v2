@@ -39,9 +39,20 @@ const Events: CollectionConfig = {
       name: 'location',
       type: 'relationship',
       relationTo: 'event-locations',
-      // Virtual events would not have a location, so not required?
-      // TODO: If this event is virtual, should we capture virtual-specific info?
       required: false,
+    },
+    {
+      name: 'is-virtual',
+      type: 'checkbox',
+      required: false,
+    },
+    {
+      name: 'zoom-link',
+      type: 'text',
+      required: false,
+      admin: {
+        condition: ({ data }) => data.isVirtual,
+      },
     },
     {
       name: 'notes',
