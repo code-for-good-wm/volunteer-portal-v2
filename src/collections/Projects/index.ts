@@ -20,7 +20,6 @@ const Projects: CollectionConfig = {
       name: 'events',
       type: 'relationship',
       relationTo: 'events',
-      hasMany: true,
       required: false,
     },
     {
@@ -31,13 +30,13 @@ const Projects: CollectionConfig = {
     {
       name: 'description',
       type: 'textarea',
-      required: false,
+      required: true,
     },
     {
       name: 'project-size',
       type: 'select',
       options: swagSizes,
-      required: true,
+      required: false,
       access: {
         read: admin,
       },
@@ -46,15 +45,30 @@ const Projects: CollectionConfig = {
       name: 'team-size',
       type: 'select',
       options: swagSizes,
-      required: true,
+      required: false,
       access: {
         read: admin,
       },
     },
     {
-      name: 'needed-skills',
+      name: 'key-skills',
       type: 'textarea',
-      required: true,
+      required: false,
+      access: {
+        read: admin,
+      },
+    },
+    {
+      name: 'team-roles',
+      type: 'array',
+      fields: [
+        {
+          name: 'name',
+          label: 'role',
+          type: 'text',
+        },
+      ],
+      required: false,
       access: {
         read: admin,
       },

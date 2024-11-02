@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { admin } from '@/utilities/access'
+import { Team, TeamRole } from 'payload-types'
 
 const Teams: CollectionConfig = {
   slug: 'teams',
@@ -17,14 +18,9 @@ const Teams: CollectionConfig = {
     },
     {
       name: 'roles',
-      type: 'array',
-      fields: [
-        {
-          name: 'name',
-          label: 'role',
-          type: 'text',
-        },
-      ],
+      type: 'relationship',
+      relationTo: 'team-roles',
+      hasMany: true,
       required: true,
       access: {
         read: admin,
@@ -48,18 +44,22 @@ const Teams: CollectionConfig = {
           relationTo: 'users',
           required: true,
           unique: true,
+          // NOTE: The intention here is to have a complete list of team members including team leads
           //TODO: fix unique - cannot have the same user twice
           //TODO: fix validate - role of the user must be volunteer
           //TODO: validate: (val, {data}) => data.role === 'volunteer' && data.teamMembers,
         },
         {
-          name: 'role-name',
-          type: 'array',
-          fields: [],
+          name: 'role',
+          type: 'relationship',
+          relationTo: 'team-roles',
+          hasMany: true,
+          required: true,
+          // TODO: In a perfect world, we would like to filter the roles
+          // based on the roles selected for this team, perhaps using filterOptions
           access: {
             read: admin,
           },
-          //TODO: pull from roles within this file if possible.
         },
       ],
     },
