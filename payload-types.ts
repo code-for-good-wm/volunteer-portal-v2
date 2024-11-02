@@ -158,7 +158,6 @@ export interface EventSery {
   id: string;
   name: string;
   description?: string | null;
-  events?: (string | Event)[] | null;
   notes?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -262,12 +261,6 @@ export interface Project {
   'project-size'?: ('xs' | 's' | 'm' | 'l' | 'xl') | null;
   'team-size'?: ('xs' | 's' | 'm' | 'l' | 'xl') | null;
   'key-skills'?: string | null;
-  'team-roles'?:
-    | {
-        name?: string | null;
-        id?: string | null;
-      }[]
-    | null;
   notes?: string | null;
   updatedAt: string;
   createdAt: string;

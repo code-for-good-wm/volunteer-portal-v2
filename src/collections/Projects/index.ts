@@ -72,21 +72,6 @@ const Projects: CollectionConfig = {
       },
     },
     {
-      name: 'team-roles',
-      type: 'array',
-      fields: [
-        {
-          name: 'name',
-          label: 'role',
-          type: 'text',
-        },
-      ],
-      required: false,
-      access: {
-        read: admin,
-      },
-    },
-    {
       name: 'notes',
       label: 'Notes (admin only)',
       type: 'textarea',

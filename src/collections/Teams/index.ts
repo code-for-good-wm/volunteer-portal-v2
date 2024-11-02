@@ -28,7 +28,6 @@ const Teams: CollectionConfig = {
         },
         {
           name: 'notes',
-          label: 'Notes',
           type: 'text',
           required: false,
         },
@@ -60,7 +59,7 @@ const Teams: CollectionConfig = {
           filterOptions: () => {
             return {
               // TODO: Also filter out any previously selected volunteers
-              // You shouldn't be able to add the same volunteer twice)
+              // You shouldn't be able to add the same volunteer twice
               role: { equals: 'volunteer' },
             }
           },
