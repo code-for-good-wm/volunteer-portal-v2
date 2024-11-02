@@ -12,6 +12,12 @@ export interface Config {
   };
   collections: {
     users: User;
+    'event-series': EventSery;
+    events: Event;
+    'event-locations': EventLocation;
+    organizations: Organization;
+    projects: Project;
+    teams: Team;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -51,6 +57,7 @@ export interface User {
   id: string;
   name: string;
   role: 'admin' | 'organization' | 'volunteer';
+  organization?: (string | null) | Organization;
   notes?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -65,14 +72,258 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "organizations".
+ */
+export interface Organization {
+  id: string;
+  name: string;
+  description?: string | null;
+  address: {
+    'address-line1': string;
+    'address-line2'?: string | null;
+    city: string;
+    state:
+      | 'AL'
+      | 'AK'
+      | 'AZ'
+      | 'AR'
+      | 'CA'
+      | 'CO'
+      | 'CT'
+      | 'DE'
+      | 'FL'
+      | 'GA'
+      | 'HI'
+      | 'ID'
+      | 'IL'
+      | 'IN'
+      | 'IA'
+      | 'KS'
+      | 'KY'
+      | 'LA'
+      | 'ME'
+      | 'MD'
+      | 'MA'
+      | 'MI'
+      | 'MN'
+      | 'MS'
+      | 'MO'
+      | 'MT'
+      | 'NE'
+      | 'NV'
+      | 'NH'
+      | 'NJ'
+      | 'NM'
+      | 'NY'
+      | 'NC'
+      | 'ND'
+      | 'OH'
+      | 'OK'
+      | 'OR'
+      | 'PA'
+      | 'RI'
+      | 'SC'
+      | 'SD'
+      | 'TN'
+      | 'TX'
+      | 'UT'
+      | 'VT'
+      | 'VA'
+      | 'WA'
+      | 'WV'
+      | 'WI'
+      | 'WY';
+    'postal-code': string;
+  };
+  website: string;
+  contacts?:
+    | {
+        name: string;
+        'primary-contact'?: boolean | null;
+        'phone-number'?: string | null;
+        email?: string | null;
+        notes?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "event-series".
+ */
+export interface EventSery {
+  id: string;
+  name: string;
+  description?: string | null;
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: string;
+  'event-series': string | EventSery;
+  name: string;
+  'start-date': string;
+  'end-date': string;
+  description?: string | null;
+  location?: (string | null) | EventLocation;
+  'is-virtual'?: boolean | null;
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "event-locations".
+ */
+export interface EventLocation {
+  id: string;
+  name: string;
+  description?: string | null;
+  address: {
+    'address-line1': string;
+    'address-line2'?: string | null;
+    city: string;
+    state:
+      | 'AL'
+      | 'AK'
+      | 'AZ'
+      | 'AR'
+      | 'CA'
+      | 'CO'
+      | 'CT'
+      | 'DE'
+      | 'FL'
+      | 'GA'
+      | 'HI'
+      | 'ID'
+      | 'IL'
+      | 'IN'
+      | 'IA'
+      | 'KS'
+      | 'KY'
+      | 'LA'
+      | 'ME'
+      | 'MD'
+      | 'MA'
+      | 'MI'
+      | 'MN'
+      | 'MS'
+      | 'MO'
+      | 'MT'
+      | 'NE'
+      | 'NV'
+      | 'NH'
+      | 'NJ'
+      | 'NM'
+      | 'NY'
+      | 'NC'
+      | 'ND'
+      | 'OH'
+      | 'OK'
+      | 'OR'
+      | 'PA'
+      | 'RI'
+      | 'SC'
+      | 'SD'
+      | 'TN'
+      | 'TX'
+      | 'UT'
+      | 'VT'
+      | 'VA'
+      | 'WA'
+      | 'WV'
+      | 'WI'
+      | 'WY';
+    'postal-code': string;
+  };
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: string;
+  organizations: string | Organization;
+  events?: (string | null) | Event;
+  'brief-description': string;
+  'extended-description'?: string | null;
+  'project-size'?: ('xs' | 's' | 'm' | 'l' | 'xl') | null;
+  'team-size'?: ('xs' | 's' | 'm' | 'l' | 'xl') | null;
+  'key-skills'?: string | null;
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "teams".
+ */
+export interface Team {
+  id: string;
+  projects: string | Project;
+  roles: {
+    description: string;
+    notes?: string | null;
+    id?: string | null;
+  }[];
+  'team-lead': (string | User)[];
+  'team-members'?:
+    | {
+        volunteer?: (string | null) | User;
+        role: string;
+        id?: string | null;
+      }[]
+    | null;
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
   id: string;
-  document?: {
-    relationTo: 'users';
-    value: string | User;
-  } | null;
+  document?:
+    | ({
+        relationTo: 'users';
+        value: string | User;
+      } | null)
+    | ({
+        relationTo: 'event-series';
+        value: string | EventSery;
+      } | null)
+    | ({
+        relationTo: 'events';
+        value: string | Event;
+      } | null)
+    | ({
+        relationTo: 'event-locations';
+        value: string | EventLocation;
+      } | null)
+    | ({
+        relationTo: 'organizations';
+        value: string | Organization;
+      } | null)
+    | ({
+        relationTo: 'projects';
+        value: string | Project;
+      } | null)
+    | ({
+        relationTo: 'teams';
+        value: string | Team;
+      } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';

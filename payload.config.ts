@@ -1,6 +1,14 @@
 import path from 'path'
 // import { postgresAdapter } from '@payloadcms/db-postgres'
 import { en } from 'payload/i18n/en'
+import Users from './src/collections/Users'
+import EventSeries from './src/collections/EventSeries'
+import Events from './src/collections/Events'
+import EventLocations from './src/collections/EventLocations'
+import Projects from './src/collections/Projects'
+import Organizations from './src/collections/Organizations'
+import Teams from './src/collections/Teams'
+
 import {
   AlignFeature,
   BlockquoteFeature,
@@ -31,56 +39,14 @@ export default buildConfig({
   //editor: slateEditor({}),
   editor: lexicalEditor(),
   collections: [
-    {
-      slug: 'users',
-      auth: true,
-      access: {
-        delete: () => false,
-        update: () => false,
-      },
-      fields: [
-        {
-          name: 'name',
-          type: 'text',
-          required: true,
-        },
-        {
-          name: 'role',
-          type: 'select',
-          hasMany: false,
-          required: true,
-          options: [
-            {
-              label: 'Admin',
-              value: 'admin',
-            },
-            {
-              label: 'Organization',
-              value: 'organization',
-            },
-            {
-              label: 'Volunteer',
-              value: 'volunteer',
-            },
-          ],
-        },
-        {
-          name: 'notes',
-          type: 'textarea',
-          required: false,
-        },
-        // TODO: Should the profile be its own collection?
-      ],
-    },
-    /**
-     * TODO: Add other collections:
-     * - Events
-     * - Event Occurrences
-     * - Organizations
-     * - Projects
-     * - Teams
-     * - Profiles??? (is this a separate collection in the current portal?)
-     */
+    Users,
+    EventSeries,
+    Events,
+    EventLocations,
+    Organizations,
+    Projects,
+    Teams,
+    //Profiles
   ],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
