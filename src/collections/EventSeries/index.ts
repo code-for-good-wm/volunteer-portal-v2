@@ -13,6 +13,12 @@ const EventSeries: CollectionConfig = {
   },
   fields: [
     {
+      name: 'event',
+      type: 'relationship',
+      relationTo: 'events',
+      hasMany: true,
+    },
+    {
       name: 'name',
       type: 'text',
       required: true,
@@ -23,14 +29,6 @@ const EventSeries: CollectionConfig = {
       type: 'textarea',
       required: false,
     },
-    // TODO: How do we display all events which are linked to this series?
-    // {
-    //   name: 'events',
-    //   type: 'relationship',
-    //   relationTo: 'events',
-    //   hasMany: true,
-    //   required: false,
-    // },
     {
       name: 'notes',
       label: 'Notes (admin only)',

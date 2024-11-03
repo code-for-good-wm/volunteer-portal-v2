@@ -13,16 +13,10 @@ const Events: CollectionConfig = {
   },
   fields: [
     {
-      name: 'event-series',
-      type: 'relationship',
-      relationTo: 'event-series',
-      required: true,
-      defaultValue: 'New Event',
-    },
-    {
       name: 'name',
       type: 'text',
       required: true,
+      defaultValue: 'New Event',
     },
     {
       name: 'start-date',
