@@ -1,9 +1,9 @@
-import { admin } from '@/utilities/access'
-import type { Access, CollectionConfig, User } from 'payload'
+import { admin, adminOrBoardMember } from '@/utilities/access'
+import type { Access, CollectionConfig, Config, User } from 'payload'
 
-export const isAdminOrSelf: Access<User> = ({ id, req: { user } }) => {
+export const adminOrBoardOrSelf: Access<User> = ({ id, req: { user } }) => {
   if (user) {
-    if (user.role?.includes('admin')) {
+    if (user.role?.includes('admin') || user.role?.includes('board-member')) {
       return true
     }
     // TODO: is the document ID of the users collection the same as the user ID?
@@ -15,21 +15,33 @@ export const isAdminOrSelf: Access<User> = ({ id, req: { user } }) => {
 
 const Users: CollectionConfig = {
   slug: 'users',
-  auth: true,
+  auth: true, // TODO: Ultimately, this will not be an authentication-related collection
   access: {
-    delete: isAdminOrSelf,
-    read: isAdminOrSelf,
-    update: isAdminOrSelf,
+    delete: () => false,
+    read: adminOrBoardOrSelf,
+    update: adminOrBoardOrSelf,
   },
   admin: {
     useAsTitle: 'name',
   },
   fields: [
     {
+      // Unique identifier from authentication system
+      name: 'authId',
+      type: 'text',
+      required: true,
+      unique: true,
+      access: {
+        read: () => false,
+        update: () => false,
+      },
+    },
+    {
       name: 'name',
       type: 'text',
       required: true,
       maxLength: 35,
+      defaultValue: 'New User',
     },
     {
       name: 'role',
@@ -49,18 +61,33 @@ const Users: CollectionConfig = {
           label: 'Volunteer',
           value: 'volunteer',
         },
+        {
+          label: 'Board Member',
+          value: 'board-member',
+        },
+
+        // TODO: There may be a use case for a non-admin CFG board member role
       ],
       access: {
         update: admin,
       },
     },
-    // TODO: what about email and phone number?  Phone might be better saved in the profile.
-    // But email is used for authentication, yes?  How do we add it to this collection from the authentication system?
+    {
+      name: 'email',
+      type: 'email',
+      required: true,
+    },
+    {
+      name: 'phone',
+      type: 'text',
+      required: false,
+    },
     {
       name: 'organization',
       type: 'relationship',
       relationTo: 'organizations',
       required: false,
+      // TODO: This needs to be required for all users with a role of organization
       // admin: {
       //   condition: ({ data }) => data.role === 'organization',
       // },
@@ -70,13 +97,36 @@ const Users: CollectionConfig = {
       //     data.role === 'organization',
     },
     {
+      name: 'profile',
+      type: 'relationship',
+      relationTo: 'profiles',
+      required: false,
+      // TODO: Should this be required for all users with a role of volunteer?
+    },
+    {
       name: 'notes',
-      label: 'Notes (admin only)',
+      label: 'Notes (admin/board member only)',
       type: 'textarea',
       required: false,
       access: {
-        read: admin,
-        update: admin,
+        read: adminOrBoardMember,
+        update: adminOrBoardMember,
+      },
+    },
+    {
+      name: 'archived',
+      type: 'checkbox',
+      access: {
+        read: adminOrBoardMember,
+        update: adminOrBoardMember,
+      },
+    },
+    {
+      name: 'archived-date',
+      type: 'date',
+      access: {
+        read: adminOrBoardMember,
+        update: adminOrBoardMember,
       },
     },
   ],

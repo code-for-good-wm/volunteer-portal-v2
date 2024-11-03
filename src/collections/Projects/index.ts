@@ -1,12 +1,12 @@
 import swagSizes from '@/data/swagSizes'
-import { admin } from '@/utilities/access'
+import { adminOrBoardMember } from '@/utilities/access'
 import type { CollectionConfig } from 'payload'
 
 const Projects: CollectionConfig = {
   slug: 'projects',
   access: {
-    create: admin,
-    update: admin,
+    create: adminOrBoardMember,
+    update: adminOrBoardMember,
     delete: () => false,
   },
   admin: {
@@ -16,24 +16,17 @@ const Projects: CollectionConfig = {
   },
   fields: [
     {
-      name: 'organizations',
-      label: 'Organization',
+      name: 'teams',
       type: 'relationship',
-      relationTo: 'organizations',
-      required: true,
-    },
-    {
-      name: 'events',
-      label: 'Event',
-      type: 'relationship',
-      relationTo: 'events',
-      required: false,
+      relationTo: 'teams',
+      hasMany: true,
     },
     {
       name: 'brief-description',
       label: 'Brief Description (for public display)',
       type: 'text',
       required: true,
+      defaultValue: 'New Project',
     },
     {
       name: 'extended-description',
@@ -42,7 +35,7 @@ const Projects: CollectionConfig = {
       type: 'textarea',
       required: false,
       access: {
-        read: admin,
+        read: adminOrBoardMember,
       },
     },
     {
@@ -51,7 +44,7 @@ const Projects: CollectionConfig = {
       options: swagSizes,
       required: false,
       access: {
-        read: admin,
+        read: adminOrBoardMember,
       },
     },
     {
@@ -60,7 +53,7 @@ const Projects: CollectionConfig = {
       options: swagSizes,
       required: false,
       access: {
-        read: admin,
+        read: adminOrBoardMember,
       },
     },
     {
@@ -68,16 +61,24 @@ const Projects: CollectionConfig = {
       type: 'textarea',
       required: false,
       access: {
-        read: admin,
+        read: adminOrBoardMember,
       },
     },
     {
       name: 'notes',
-      label: 'Notes (admin only)',
+      label: 'Notes (admin/board member only)',
       type: 'textarea',
       required: false,
       access: {
-        read: admin,
+        read: adminOrBoardMember,
+      },
+    },
+    {
+      name: 'archived',
+      type: 'checkbox',
+      access: {
+        read: adminOrBoardMember,
+        update: adminOrBoardMember,
       },
     },
   ],

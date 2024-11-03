@@ -1,12 +1,12 @@
 import { addressGroup, contactGroup } from '@/data/collectionGroups'
-import { admin, adminOrOrgMember } from '../../utilities/access'
+import { adminOrBoardMember, adminOrOrgOrBoardMember } from '../../utilities/access'
 import type { CollectionConfig } from 'payload'
 
 const Organizations: CollectionConfig = {
   slug: 'organizations',
   access: {
-    create: admin,
-    update: adminOrOrgMember,
+    create: adminOrBoardMember,
+    update: adminOrOrgOrBoardMember,
     delete: () => false,
   },
   admin: {
@@ -14,9 +14,16 @@ const Organizations: CollectionConfig = {
   },
   fields: [
     {
+      name: 'projects',
+      type: 'relationship',
+      relationTo: 'projects',
+      hasMany: true,
+    },
+    {
       name: 'name',
       type: 'text',
       required: true,
+      defaultValue: 'New Organization',
     },
     {
       name: 'description',
@@ -38,17 +45,25 @@ const Organizations: CollectionConfig = {
       type: 'array',
       fields: contactGroup,
       access: {
-        read: adminOrOrgMember,
+        read: adminOrOrgOrBoardMember,
       },
     },
     {
       name: 'notes',
-      label: 'Notes (admin only)',
+      label: 'Notes (admin/board member only)',
       type: 'textarea',
       required: false,
       access: {
-        read: admin,
-        update: admin,
+        read: adminOrBoardMember,
+        update: adminOrBoardMember,
+      },
+    },
+    {
+      name: 'archived',
+      type: 'checkbox',
+      access: {
+        read: adminOrBoardMember,
+        update: adminOrBoardMember,
       },
     },
   ],

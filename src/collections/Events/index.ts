@@ -1,11 +1,11 @@
-import { admin } from '../../utilities/access'
+import { adminOrBoardMember } from '../../utilities/access'
 import type { CollectionConfig } from 'payload'
 
 const Events: CollectionConfig = {
   slug: 'events',
   access: {
-    create: admin,
-    update: admin,
+    create: adminOrBoardMember,
+    update: adminOrBoardMember,
     delete: () => false,
   },
   admin: {
@@ -13,15 +13,17 @@ const Events: CollectionConfig = {
   },
   fields: [
     {
-      name: 'event-series',
+      name: 'projects',
       type: 'relationship',
-      relationTo: 'event-series',
-      required: true,
+      relationTo: 'projects',
+      required: false,
+      hasMany: true,
     },
     {
       name: 'name',
       type: 'text',
       required: true,
+      defaultValue: 'New Event',
     },
     {
       name: 'start-date',
@@ -51,11 +53,19 @@ const Events: CollectionConfig = {
     },
     {
       name: 'notes',
-      label: 'Notes (admin only)',
+      label: 'Notes (admin/board member only)',
       type: 'textarea',
       required: false,
       access: {
-        read: admin,
+        read: adminOrBoardMember,
+      },
+    },
+    {
+      name: 'archived',
+      type: 'checkbox',
+      access: {
+        read: adminOrBoardMember,
+        update: adminOrBoardMember,
       },
     },
   ],

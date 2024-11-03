@@ -1,21 +1,14 @@
 import type { CollectionConfig } from 'payload'
-import { admin } from '@/utilities/access'
+import { adminOrBoardMember } from '@/utilities/access'
 
 const Teams: CollectionConfig = {
   slug: 'teams',
   access: {
-    create: admin,
-    update: admin,
+    create: adminOrBoardMember,
+    update: adminOrBoardMember,
     delete: () => false,
   },
   fields: [
-    {
-      name: 'projects',
-      label: 'Project',
-      type: 'relationship',
-      relationTo: 'projects',
-      required: true,
-    },
     {
       name: 'roles',
       type: 'array',
@@ -34,7 +27,7 @@ const Teams: CollectionConfig = {
       ],
       required: true,
       access: {
-        read: admin,
+        read: adminOrBoardMember,
       },
     },
     {
@@ -71,18 +64,26 @@ const Teams: CollectionConfig = {
           // TODO: In a perfect world, we could pick from the roles added
           // to the roles array above
           access: {
-            read: admin,
+            read: adminOrBoardMember,
           },
         },
       ],
     },
     {
       name: 'notes',
-      label: 'Notes (admin only)',
+      label: 'Notes (admin/board member only)',
       type: 'textarea',
       required: false,
       access: {
-        read: admin,
+        read: adminOrBoardMember,
+      },
+    },
+    {
+      name: 'archived',
+      type: 'checkbox',
+      access: {
+        read: adminOrBoardMember,
+        update: adminOrBoardMember,
       },
     },
   ],

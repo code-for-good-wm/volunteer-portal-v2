@@ -1,4 +1,6 @@
-const swagSizes = [
+import { OptionObject } from 'payload'
+
+const swagSizes: OptionObject[] = [
   {
     value: 'xs',
     label: 'Extra Small',

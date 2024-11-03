@@ -6,10 +6,15 @@ export const admin = ({ req: { user } }: AccessArgs) => {
   return user?.role.includes('admin') ?? false
 }
 
-export const adminOrOrgMember = ({ id, req: { user } }: AccessArgs) => {
+export const adminOrBoardMember = ({ id, req: { user } }: AccessArgs) => {
+  return (user?.role.includes('admin') || user?.role.includes('board-member')) ?? false
+}
+
+export const adminOrOrgOrBoardMember = ({ id, req: { user } }: AccessArgs) => {
   return (
     (user?.role.includes('admin') ||
-      (user?.role.includes('organization') && user?.organization === id)) ??
+      user?.role.includes('organization') ||
+      (user?.role.includes('board-member') && user?.organization === id)) ??
     false
   )
 }
