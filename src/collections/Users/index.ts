@@ -1,7 +1,7 @@
 import { admin } from '@/utilities/access'
-import type { Access, CollectionConfig, User } from 'payload'
+import type { Access, CollectionConfig, Config, User } from 'payload'
 
-export const isAdminOrSelf: Access<User> = ({ id, req: { user } }) => {
+export const adminOrSelf: Access<User> = ({ id, req: { user } }) => {
   if (user) {
     if (user.role?.includes('admin')) {
       return true
@@ -17,19 +17,31 @@ const Users: CollectionConfig = {
   slug: 'users',
   auth: true,
   access: {
-    delete: isAdminOrSelf,
-    read: isAdminOrSelf,
-    update: isAdminOrSelf,
+    delete: adminOrSelf,
+    read: adminOrSelf,
+    update: adminOrSelf,
   },
   admin: {
     useAsTitle: 'name',
   },
   fields: [
     {
+      // Unique identifier from authentication system
+      name: 'authId',
+      type: 'text',
+      required: true,
+      unique: true,
+      access: {
+        read: () => false,
+        update: () => false,
+      },
+    },
+    {
       name: 'name',
       type: 'text',
       required: true,
       maxLength: 35,
+      defaultValue: 'New User',
     },
     {
       name: 'role',
@@ -49,13 +61,22 @@ const Users: CollectionConfig = {
           label: 'Volunteer',
           value: 'volunteer',
         },
+        // TODO: There may be a use case for a non-admin CFG board member role
       ],
       access: {
         update: admin,
       },
     },
-    // TODO: what about email and phone number?  Phone might be better saved in the profile.
-    // But email is used for authentication, yes?  How do we add it to this collection from the authentication system?
+    {
+      name: 'email',
+      type: 'email',
+      required: true,
+    },
+    {
+      name: 'phone',
+      type: 'text',
+      required: false,
+    },
     {
       name: 'organization',
       type: 'relationship',

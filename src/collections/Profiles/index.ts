@@ -1,23 +1,39 @@
 import { addressGroup, contactGroup } from '@/data/collectionGroups'
 import { admin, adminOrOrgMember } from '../../utilities/access'
-import type { CollectionConfig } from 'payload'
+import type { Access, CollectionConfig } from 'payload'
 
-const Organizations: CollectionConfig = {
-  slug: 'organizations',
+// TODO: Add typing, e.g. Access<Profile>
+export const adminOrOwner: Access = ({ req: { user }, data }) => {
+  if (user) {
+    if (user.role?.includes('admin')) {
+      return true
+    }
+
+    const profileOwner = data.user
+
+    return profileOwner.id === user.id
+  }
+
+  return false
+}
+
+const Profiles: CollectionConfig = {
+  slug: 'profiles',
   access: {
-    create: admin,
-    update: adminOrOrgMember,
+    read: adminOrOwner,
+    update: adminOrOwner,
     delete: () => false,
   },
   admin: {
-    useAsTitle: 'name',
+    // TODO: We'll need access to the user name here
+    // useAsTitle: 'name',
   },
   fields: [
     {
       name: 'name',
       type: 'text',
       required: true,
-      defaultValue: 'New Organization',
+      defaultValue: 'New Profile',
     },
     {
       name: 'description',
@@ -55,4 +71,4 @@ const Organizations: CollectionConfig = {
   ],
 }
 
-export default Organizations
+export default Profiles

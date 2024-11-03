@@ -34,6 +34,7 @@ const Projects: CollectionConfig = {
       label: 'Brief Description (for public display)',
       type: 'text',
       required: true,
+      defaultValue: 'New Project',
     },
     {
       name: 'extended-description',

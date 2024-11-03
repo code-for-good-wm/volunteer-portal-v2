@@ -16,6 +16,7 @@ const EventSeries: CollectionConfig = {
       name: 'name',
       type: 'text',
       required: true,
+      defaultValue: 'New Event Series',
     },
     {
       name: 'description',

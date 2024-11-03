@@ -17,6 +17,7 @@ const Events: CollectionConfig = {
       type: 'relationship',
       relationTo: 'event-series',
       required: true,
+      defaultValue: 'New Event',
     },
     {
       name: 'name',

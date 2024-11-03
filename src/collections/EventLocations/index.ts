@@ -18,6 +18,7 @@ const EventLocations: CollectionConfig = {
       name: 'name',
       type: 'text',
       required: true,
+      defaultValue: 'New Event Location',
     },
     {
       name: 'description',
