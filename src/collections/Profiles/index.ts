@@ -104,7 +104,7 @@ const Profiles: CollectionConfig = {
     },
     {
       name: 'skills',
-      type: 'group',
+      type: 'array',
       fields: [
         {
           name: 'skill',

@@ -232,10 +232,13 @@ export interface Profile {
       date?: string | null;
     };
   };
-  skills: {
-    skill: string | ProfileSkill;
-    level: '0' | '1' | '2' | '3' | '4';
-  };
+  skills?:
+    | {
+        skill: string | ProfileSkill;
+        level: '0' | '1' | '2' | '3' | '4';
+        id?: string | null;
+      }[]
+    | null;
   additionalSkills?: string | null;
   teamLeadCandidate?: boolean | null;
   previousVolunteer?: boolean | null;
