@@ -18,6 +18,8 @@ export interface Config {
     organizations: Organization;
     projects: Project;
     teams: Team;
+    profiles: Profile;
+    'profile-skills': ProfileSkill;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -55,10 +57,15 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
+  authId: string;
   name: string;
-  role: 'admin' | 'organization' | 'volunteer';
+  role: 'admin' | 'organization' | 'volunteer' | 'board-member';
+  phone?: string | null;
   organization?: (string | null) | Organization;
+  profile?: (string | null) | Profile;
   notes?: string | null;
+  archived?: boolean | null;
+  'archived-date'?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -76,6 +83,7 @@ export interface User {
  */
 export interface Organization {
   id: string;
+  projects?: (string | Project)[] | null;
   name: string;
   description?: string | null;
   address: {
@@ -147,6 +155,104 @@ export interface Organization {
       }[]
     | null;
   notes?: string | null;
+  archived?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: string;
+  teams?: (string | Team)[] | null;
+  'brief-description': string;
+  'extended-description'?: string | null;
+  'project-size'?: ('xs' | 's' | 'm' | 'l' | 'xl') | null;
+  'team-size'?: ('xs' | 's' | 'm' | 'l' | 'xl') | null;
+  'key-skills'?: string | null;
+  notes?: string | null;
+  archived?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "teams".
+ */
+export interface Team {
+  id: string;
+  roles: {
+    description: string;
+    notes?: string | null;
+    id?: string | null;
+  }[];
+  'team-lead': (string | User)[];
+  'team-members'?:
+    | {
+        volunteer?: (string | null) | User;
+        role: string;
+        id?: string | null;
+      }[]
+    | null;
+  notes?: string | null;
+  archived?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "profiles".
+ */
+export interface Profile {
+  id: string;
+  completionDate?: string | null;
+  lastUpdated: string;
+  roles?: ('designer' | 'developer' | 'support' | 'lead')[] | null;
+  linkedInUrl?: string | null;
+  websiteUrl?: string | null;
+  portfolioUrl?: string | null;
+  shirtSize?: ('small' | 'medium' | 'large' | 'xl' | 'xxl' | '3xl' | '4xl' | '5xl') | null;
+  dietaryRestrictions?:
+    | ('vegan' | 'vegetarian' | 'dairy' | 'gluten' | 'kosher' | 'nuts' | 'fish' | 'eggs' | 'soy' | 'corn' | 'other')
+    | null;
+  additionalDietaryRestrictions?: string | null;
+  accessibilityRequirements?: string | null;
+  agreements?: {
+    codeOfConduct?: {
+      version?: string | null;
+      date?: string | null;
+    };
+    photoRelease?: {
+      version?: string | null;
+      date?: string | null;
+    };
+    termsAndConditions?: {
+      version?: string | null;
+      date?: string | null;
+    };
+  };
+  skills: {
+    skill: string | ProfileSkill;
+    level: '0' | '1' | '2' | '3' | '4';
+  };
+  additionalSkills?: string | null;
+  teamLeadCandidate?: boolean | null;
+  previousVolunteer?: boolean | null;
+  notes?: string | null;
+  archived?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "profile-skills".
+ */
+export interface ProfileSkill {
+  id: string;
+  code: string;
+  description: string;
+  archived?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -156,9 +262,11 @@ export interface Organization {
  */
 export interface EventSery {
   id: string;
+  event?: (string | Event)[] | null;
   name: string;
   description?: string | null;
   notes?: string | null;
+  archived?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -168,7 +276,7 @@ export interface EventSery {
  */
 export interface Event {
   id: string;
-  'event-series': string | EventSery;
+  projects?: (string | Project)[] | null;
   name: string;
   'start-date': string;
   'end-date': string;
@@ -176,6 +284,7 @@ export interface Event {
   location?: (string | null) | EventLocation;
   'is-virtual'?: boolean | null;
   notes?: string | null;
+  archived?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -245,47 +354,7 @@ export interface EventLocation {
     'postal-code': string;
   };
   notes?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "projects".
- */
-export interface Project {
-  id: string;
-  organizations: string | Organization;
-  events?: (string | null) | Event;
-  'brief-description': string;
-  'extended-description'?: string | null;
-  'project-size'?: ('xs' | 's' | 'm' | 'l' | 'xl') | null;
-  'team-size'?: ('xs' | 's' | 'm' | 'l' | 'xl') | null;
-  'key-skills'?: string | null;
-  notes?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "teams".
- */
-export interface Team {
-  id: string;
-  projects: string | Project;
-  roles: {
-    description: string;
-    notes?: string | null;
-    id?: string | null;
-  }[];
-  'team-lead': (string | User)[];
-  'team-members'?:
-    | {
-        volunteer?: (string | null) | User;
-        role: string;
-        id?: string | null;
-      }[]
-    | null;
-  notes?: string | null;
+  archived?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -323,6 +392,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'teams';
         value: string | Team;
+      } | null)
+    | ({
+        relationTo: 'profiles';
+        value: string | Profile;
+      } | null)
+    | ({
+        relationTo: 'profile-skills';
+        value: string | ProfileSkill;
       } | null);
   globalSlug?: string | null;
   user: {

@@ -66,3 +66,35 @@ export const contactGroup: Field[] = [
     },
   },
 ]
+
+const agreementDataGroup: Field[] = [
+  {
+    name: 'version',
+    type: 'text',
+    required: false,
+  },
+  {
+    name: 'date',
+    type: 'date',
+    required: false,
+  },
+  // TODO: Do we add a boolean value here as well for simplicity?
+]
+
+export const agreementsGroup: Field[] = [
+  {
+    name: 'codeOfConduct',
+    type: 'group',
+    fields: agreementDataGroup,
+  },
+  {
+    name: 'photoRelease',
+    type: 'group',
+    fields: agreementDataGroup,
+  },
+  {
+    name: 'termsAndConditions',
+    type: 'group',
+    fields: agreementDataGroup,
+  },
+]

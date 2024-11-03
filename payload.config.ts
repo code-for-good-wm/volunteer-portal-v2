@@ -8,6 +8,8 @@ import EventLocations from './src/collections/EventLocations'
 import Projects from './src/collections/Projects'
 import Organizations from './src/collections/Organizations'
 import Teams from './src/collections/Teams'
+import Profiles from '@/collections/Profiles'
+import ProfileSkills from '@/collections/ProfileSkills'
 
 import {
   AlignFeature,
@@ -31,6 +33,7 @@ import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
+import profileSkillsSource from '@/data/profileSkillsSource'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -46,7 +49,8 @@ export default buildConfig({
     Organizations,
     Projects,
     Teams,
-    //Profiles
+    Profiles,
+    ProfileSkills,
   ],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -86,12 +90,30 @@ export default buildConfig({
       await payload.create({
         collection: 'users',
         data: {
+          authId: '1234',
           email: 'admin@codeforgoodwm.org',
           password: 'admin',
           name: 'CFG Admin',
           role: 'admin',
         },
       })
+    }
+
+    const profileSkills = await payload.find({
+      collection: 'profile-skills',
+      limit: 1,
+    })
+
+    if (profileSkills.docs.length === 0) {
+      console.log('Creating profile skills')
+      for (let i = 0; i < profileSkillsSource.length; i++) {
+        // TODO: Can we just dump these in without an await?
+        await payload.create({
+          collection: 'profile-skills',
+          data: profileSkillsSource[i],
+        })
+      }
+      console.log('Profile skills created')
     }
   },
   // Sharp is now an optional dependency -
